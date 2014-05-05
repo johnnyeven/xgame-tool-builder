@@ -7,23 +7,29 @@
 	<s:layout>
 		<s:BasicLayout/>
 	</s:layout>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.xgame.tools.mapbuilder.common.Editor;
+			
+			import mx.events.MenuEvent;
+			
+			protected function menu_clickHandler(event: MenuEvent):void
+			{
+				if(event.label == "新建")
+				{
+					Editor.instance.showWinNewProject(this);
+				}
+			}
+		]]>
+	</fx:Script>
+	
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
 		<s:XMLListCollection id="menuData">
 			<fx:XMLList>
-				<menuitem label="文件">
-					<menuitem label="新建">
-						<menuitem label="请求" enabled="false"/>
-						<menuitem type="separator"/>
-						<menuitem label="项目"/>
-						<menuitem label="角色" icon="userIcon">
-							<menuitem label="Customer" groupName="persons" type="radio"/>
-							<menuitem label="Employee" groupName="persons" toggled="true"
-									  type="radio"/>
-						</menuitem>
-						<menuitem label="Auto Update" toggled="true" type="check"/>
-					</menuitem>
-					<menuitem label="打印"/>
+				<menuitem label="项目" name="project">
+					<menuitem label="新建" name="newProject" />
 				</menuitem>
 				<menuitem label="视图">
 					<menuitem label="用户"/>
@@ -51,8 +57,8 @@
 		</s:XMLListCollection>
 	</fx:Declarations>
 	
-	<mx:MenuBar left="0" right="0" top="0" height="25" cornerRadius="0" dataProvider="{menuData}"
-				iconField="@icon" labelField="@label">
+	<mx:MenuBar id="mainMenu" left="0" right="0" top="0" height="25" cornerRadius="0" dataProvider="{menuData}"
+				iconField="@icon" labelField="@label" itemClick="menu_clickHandler(event)">
 	
 	</mx:MenuBar>
 	<mx:HDividedBox left="0" right="0" top="70" bottom="0" paddingBottom="5" paddingLeft="5"
@@ -79,6 +85,11 @@
 			</mx:VDividedBox>
 		</mx:HBox>
 		<mx:HBox width="100%" height="100%">
+			<mx:TabNavigator width="100%" height="100%">
+				<s:NavigatorContent width="100%" height="100%" label="test1">
+					
+				</s:NavigatorContent>
+			</mx:TabNavigator>
 		</mx:HBox>
 		<mx:HBox width="250" height="100%">
 			<mx:VDividedBox width="100%" height="100%">
