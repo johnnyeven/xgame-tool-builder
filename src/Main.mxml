@@ -2,11 +2,116 @@
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009"
 					   xmlns:s="library://ns.adobe.com/flex/spark"
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
-					   width="1000" height="600">
+					   xmlns:flexlib="http://code.google.com/p/flexlib/"
+					   width="1200" height="800" backgroundColor="#F6F6F6">
 	<s:layout>
 		<s:BasicLayout/>
 	</s:layout>
 	<fx:Declarations>
 		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+		<s:XMLListCollection id="menuData">
+			<fx:XMLList>
+				<menuitem label="文件">
+					<menuitem label="新建">
+						<menuitem label="请求" enabled="false"/>
+						<menuitem type="separator"/>
+						<menuitem label="项目"/>
+						<menuitem label="角色" icon="userIcon">
+							<menuitem label="Customer" groupName="persons" type="radio"/>
+							<menuitem label="Employee" groupName="persons" toggled="true"
+									  type="radio"/>
+						</menuitem>
+						<menuitem label="Auto Update" toggled="true" type="check"/>
+					</menuitem>
+					<menuitem label="打印"/>
+				</menuitem>
+				<menuitem label="视图">
+					<menuitem label="用户"/>
+					<menuitem label="报告"/>
+				</menuitem>
+			</fx:XMLList>
+		</s:XMLListCollection>
+		<s:XMLListCollection id="projectData">
+			<fx:XMLList>
+				<node label="scene">
+					<node label="test1"/>
+					<node label="test2"/>
+				</node>
+				<node label="stage"/>
+			</fx:XMLList>
+		</s:XMLListCollection>
+		<s:XMLListCollection id="resourceData">
+			<fx:XMLList>
+				<node label="scene">
+					<node label="test1"/>
+					<node label="test2"/>
+				</node>
+				<node label="stage"/>
+			</fx:XMLList>
+		</s:XMLListCollection>
 	</fx:Declarations>
+	
+	<mx:MenuBar left="0" right="0" top="0" height="25" cornerRadius="0" dataProvider="{menuData}"
+				iconField="@icon" labelField="@label">
+	
+	</mx:MenuBar>
+	<mx:HDividedBox left="0" right="0" top="70" bottom="0" paddingBottom="5" paddingLeft="5"
+					paddingRight="5" paddingTop="5">
+		<mx:HBox width="250" height="100%">
+			<mx:VDividedBox width="100%" height="100%">
+				<mx:VBox width="100%" height="50%">
+					<mx:Panel width="100%" height="100%" dropShadowVisible="false" layout="absolute"
+							  title="项目浏览器">
+						<mx:Tree left="0" right="0" top="0" bottom="0" borderVisible="false"
+								 dataProvider="{projectData}" iconField="@icon" labelField="@label"
+								 paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+						</mx:Tree>
+					</mx:Panel>
+				</mx:VBox>
+				<mx:VBox width="100%" height="50%">
+					<mx:Panel width="100%" height="100%" dropShadowVisible="false" layout="absolute"
+							  title="资源管理器">
+						<mx:HRule left="0" right="0" top="125"/>
+						<mx:Tree left="0" right="0" top="126" bottom="0" borderVisible="false"
+								 dataProvider="{resourceData}" iconField="@icon" labelField="@label"></mx:Tree>
+					</mx:Panel>
+				</mx:VBox>
+			</mx:VDividedBox>
+		</mx:HBox>
+		<mx:HBox width="100%" height="100%">
+		</mx:HBox>
+		<mx:HBox width="250" height="100%">
+			<mx:VDividedBox width="100%" height="100%">
+				<mx:VBox width="100%" height="50%">
+					<mx:Panel width="100%" height="100%" dropShadowVisible="false" layout="absolute"
+							  title="属性">
+						<mx:Form left="0" right="0" top="0" bottom="0">
+						</mx:Form>
+					</mx:Panel>
+				</mx:VBox>
+				<mx:VBox width="100%" height="50%">
+					<mx:Panel width="100%" height="100%" dropShadowVisible="false" layout="absolute">
+					</mx:Panel>
+				</mx:VBox>
+			</mx:VDividedBox>
+		</mx:HBox>
+	</mx:HDividedBox>
+	<s:BorderContainer left="0" right="0" top="25" height="45" backgroundColor="#F2F2F2"
+					   borderAlpha="1.0" borderColor="#BDBDBD" borderWeight="1"
+					   dropShadowVisible="false">
+		<s:layout>
+			<s:HorizontalLayout gap="10" paddingBottom="5" paddingLeft="5" paddingRight="5"
+								paddingTop="5"/>
+		</s:layout>
+		<s:Image width="32" height="32" source="@Embed('assets/images/page_text_add_32.png')"/>
+		<s:Image width="32" height="32" source="@Embed('assets/images/folder_add_32.png')"/>
+		<s:Image width="32" height="32" source="@Embed('assets/images/save_32.png')"/>
+		<s:Image height="32" source="@Embed('assets/images/seperator.png')"/>
+		<s:Image width="32" height="32" source="@Embed('assets/images/Gnome-Edit-Undo-32.png')"/>
+		<s:Image source="@Embed('assets/images/Gnome-Edit-Redo-32.png')"/>
+		<s:Image height="32" source="@Embed('assets/images/seperator.png')"/>
+		<s:Image width="32" height="32" source="assets/images/hammer_32.png"/>
+		<s:Image width="32" height="32" source="assets/images/comment_user_info_32.png"/>
+	</s:BorderContainer>
+	
 </s:WindowedApplication>
