@@ -38,7 +38,6 @@ package com.xgame.tools.mapbuilder.editor.view
 		public var btnCreate: Button;
 		public var btnCancel: Button;
 		
-		private var _doc: Document;
 		private var _map: BitmapData;
 		
 		public function WindowCreateDocument()
@@ -187,7 +186,7 @@ package com.xgame.tools.mapbuilder.editor.view
 		{
 			if(iptId.text != "" && iptName.text != "" && _map != null && iptWidth.text != "" && iptHeight.text != "")
 			{
-				_doc = new Document(iptId.text);
+				var _doc: Document = new Document(iptId.text);
 				_doc.name = iptName.text;
 				_doc.path = iptPath.text;
 				_doc.width = Number(iptWidth.text);
@@ -234,11 +233,6 @@ package com.xgame.tools.mapbuilder.editor.view
 			
 			iptWidth.text = _map.width.toString();
 			iptHeight.text = _map.height.toString();
-		}
-
-		public function get doc():Document
-		{
-			return _doc;
 		}
 
 	}

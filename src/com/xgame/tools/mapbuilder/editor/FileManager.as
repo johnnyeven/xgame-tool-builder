@@ -4,6 +4,7 @@ package com.xgame.tools.mapbuilder.editor
 	import com.xgame.tools.mapbuilder.common.Project;
 	
 	import flash.errors.IllegalOperationError;
+	import flash.utils.Dictionary;
 
 	public class FileManager
 	{
@@ -11,6 +12,7 @@ package com.xgame.tools.mapbuilder.editor
 		private static var _allowInstance: Boolean = false;
 		
 		private var _fileContainer: Vector.<Document>;
+		private var _fileIndex: Dictionary;
 		
 		public function FileManager()
 		{
@@ -23,6 +25,7 @@ package com.xgame.tools.mapbuilder.editor
 		public function init(): void
 		{
 			_fileContainer = new Vector.<Document>();
+			_fileIndex = new Dictionary();
 			
 			if(Project.instance.config != null)
 			{
@@ -31,7 +34,7 @@ package com.xgame.tools.mapbuilder.editor
 					var list: XMLList = Project.instance.config.file.document;
 					for(var i: int = 0; i<list.length(); i++)
 					{
-						_fileContainer.push(parseDocument(Project.instance.config.file.document[i]));
+						addDocument(parseDocument(Project.instance.config.file.document[i]));
 					}
 				}
 			}
@@ -41,7 +44,7 @@ package com.xgame.tools.mapbuilder.editor
 		{
 			var id: String = xml.@id;
 			var isDirectory: Boolean = false;
-			if(xml.document != null)
+			if(xml.@isBranch == "true")
 			{
 				isDirectory = true;
 			}
@@ -79,6 +82,29 @@ package com.xgame.tools.mapbuilder.editor
 		public function get fileContainer():Vector.<Document>
 		{
 			return _fileContainer;
+		}
+		
+		public function addDocument(doc: Document): void
+		{
+			if(_fileContainer.indexOf(doc) > -1)
+			{
+				return;
+			}
+			
+			if(doc.parent != null)
+			{
+				doc.parent.addDocument(doc);
+			}
+			else
+			{
+				_fileContainer.push(doc);
+				_fileIndex[doc.id] = doc;
+			}
+		}
+		
+		public function getDocument(id: String): Document
+		{
+			return _fileIndex[id];
 		}
 
 	}

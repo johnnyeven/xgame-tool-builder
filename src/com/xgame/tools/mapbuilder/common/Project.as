@@ -119,6 +119,7 @@ package com.xgame.tools.mapbuilder.common
 				
 				if(doc.isDirectory)
 				{
+					config.@isBranch = "true";
 					for(var i: int = 0; i<doc.childDocs.length; i++)
 					{
 						config.document[i] = rebuildFileList(doc.childDocs[i]);

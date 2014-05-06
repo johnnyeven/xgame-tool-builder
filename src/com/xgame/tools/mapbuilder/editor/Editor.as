@@ -2,19 +2,11 @@ package com.xgame.tools.mapbuilder.editor
 {
 	import com.xgame.tools.mapbuilder.common.Document;
 	import com.xgame.tools.mapbuilder.common.Project;
+	import com.xgame.tools.mapbuilder.editor.view.WindowCreateDirectory;
 	import com.xgame.tools.mapbuilder.editor.view.WindowCreateDocument;
 	import com.xgame.tools.mapbuilder.editor.view.WindowCreateProject;
 	
-	import flash.display.DisplayObject;
 	import flash.errors.IllegalOperationError;
-	import flash.events.MouseEvent;
-	
-	import mx.collections.XMLListCollection;
-	import mx.controls.Alert;
-	import mx.events.CloseEvent;
-	import mx.managers.PopUpManager;
-	
-	import spark.components.TitleWindow;
 	
 	public class Editor
 	{
@@ -24,6 +16,7 @@ package com.xgame.tools.mapbuilder.editor
 		private var _main: Main;
 		private var _winNewProject: WindowCreateProject;
 		private var _winNewDocument: WindowCreateDocument;
+		private var _winCreateDirectory: WindowCreateDirectory;
 		
 		public function Editor(main: Main)
 		{
@@ -36,6 +29,7 @@ package com.xgame.tools.mapbuilder.editor
 			
 			_winNewProject = new WindowCreateProject();
 			_winNewDocument = new WindowCreateDocument();
+			_winCreateDirectory = new WindowCreateDirectory();
 		}
 		
 		public static function init(main: Main): Editor
@@ -69,6 +63,11 @@ package com.xgame.tools.mapbuilder.editor
 			_winNewDocument.show();
 		}
 		
+		public function showWinCreateDirectory(): void
+		{
+			_winCreateDirectory.show();
+		}
+		
 		public function createProject(name: String, path: String): void
 		{
 			Project.instance.init(name, path);
@@ -76,9 +75,21 @@ package com.xgame.tools.mapbuilder.editor
 		
 		public function createDocument(doc: Document): void
 		{
-			FileManager.instance.fileContainer.push(doc);
+			var current: XML = XML(_main.treeProjectFile.selectedItem);
+			if(current != null && current.@isBranch == "true")
+			{
+				var id: String = current.@id;
+				doc.parent = FileManager.instance.getDocument(id);
+			}
+			
+			FileManager.instance.addDocument(doc);
 			Project.instance.rebuildXML();
 			rebuildFileTree(Project.instance.config.file);
+		}
+		
+		public function createEditor(doc: Document): void
+		{
+			
 		}
 
 		public function get main():Main

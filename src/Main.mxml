@@ -11,8 +11,10 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import com.xgame.tools.mapbuilder.common.Document;
 			import com.xgame.tools.mapbuilder.common.Project;
 			import com.xgame.tools.mapbuilder.editor.Editor;
+			import com.xgame.tools.mapbuilder.editor.FileManager;
 			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
@@ -53,9 +55,26 @@
 				Project.instance.save();
 			}
 			
-			protected function treeProjectFile_clickHandler(event:MouseEvent):void
+			protected function toolBarCreateDirectoryClickHandler(event:MouseEvent):void
 			{
-				treeProjectFile.selectedItem;
+				if(Project.instance.inited)
+				{
+					Editor.instance.showWinCreateDirectory();
+				}
+				else
+				{
+					Alert.show("请先创建项目", "错误", Alert.OK, this);
+				}
+			}
+			
+			protected function treeProjectFile_doubleClickHandler(event:MouseEvent):void
+			{
+				var selected: XML = XML(treeProjectFile.selectedItem);
+				if(selected.@isBranch != "true")
+				{
+					var id: String = selected.@id;
+					var doc: Document = FileManager.instance.getDocument(id);
+				}
 			}
 			
 		]]>
@@ -89,8 +108,8 @@
 					<mx:Panel width="100%" height="100%" dropShadowVisible="false" layout="absolute"
 							  title="项目浏览器">
 						<mx:Tree id="treeProjectFile" left="0" right="0" top="0" bottom="0"
-								 borderVisible="false" iconField="@icon" labelField="@label"
-								 paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" click="treeProjectFile_clickHandler(event)">
+								 borderVisible="false" iconField="@icon" labelField="@label" doubleClickEnabled="true"
+								 paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" doubleClick="treeProjectFile_doubleClickHandler(event)">
 						</mx:Tree>
 					</mx:Panel>
 				</mx:VBox>
@@ -136,7 +155,7 @@
 		</s:layout>
 		<s:Image width="32" height="32" source="@Embed('assets/images/web_layout_error_32_add.png')" toolTip="新建项目" click="toolBarCreateProjectClickHandler(event)"/>
 		<s:Image width="32" height="32" source="@Embed('assets/images/page_text_add_32.png')" toolTip="新建地图配置" click="toolBarCreateDocumentClickHandler(event)"/>
-		<s:Image width="32" height="32" source="@Embed('assets/images/folder_add_32.png')" toolTip="新建目录"/>
+		<s:Image width="32" height="32" source="@Embed('assets/images/folder_add_32.png')" toolTip="新建目录" click="toolBarCreateDirectoryClickHandler(event)"/>
 		<s:Image width="32" height="32" source="@Embed('assets/images/save_32.png')" toolTip="保存" click="toolBarSaveClickHandler(event)"/>
 		<s:Image height="32" source="@Embed('assets/images/seperator.png')"/>
 		<s:Image width="32" height="32" source="@Embed('assets/images/Gnome-Edit-Undo-32.png')"/>
