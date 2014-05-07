@@ -54,14 +54,14 @@ package com.xgame.tools.mapbuilder.editor
 			doc.width = xml.@width;
 			doc.height = xml.@height;
 			
-			if(xml.document != null)
+			if(xml.@isBranch == "true")
 			{
 				var child: Document;
 				for(var i: int = 0; i<xml.document.length(); i++)
 				{
 					child = parseDocument(xml.document[i]);
 					child.parent = doc;
-					doc.childDocs.push(child);
+					addDocument(child);
 				}
 			}
 			
@@ -93,13 +93,19 @@ package com.xgame.tools.mapbuilder.editor
 			
 			if(doc.parent != null)
 			{
+				if(doc.parent.childDocs.indexOf(doc) > -1)
+				{
+					return;
+				}
+				
 				doc.parent.addDocument(doc);
 			}
 			else
 			{
 				_fileContainer.push(doc);
-				_fileIndex[doc.id] = doc;
 			}
+			
+			_fileIndex[doc.id] = doc;
 		}
 		
 		public function getDocument(id: String): Document

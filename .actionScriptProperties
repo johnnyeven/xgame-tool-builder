@@ -19,7 +19,7 @@
     </application>
   </applications>
   <modules>
-    <module application="src/Main.mxml" destPath="test.swf" optimize="true" sourcePath="src/test.mxml"/>
+    <module application="src/Main.mxml" destPath="com/xgame/tools/mapbuilder/plugins/MapEditor.swf" optimize="true" sourcePath="src/com/xgame/tools/mapbuilder/plugins/MapEditor.mxml"/>
   </modules>
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
