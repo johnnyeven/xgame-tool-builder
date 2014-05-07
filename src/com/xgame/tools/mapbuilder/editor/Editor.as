@@ -104,7 +104,7 @@ package com.xgame.tools.mapbuilder.editor
 			
 			if(_m == null)
 			{
-				_i = ModuleManager.getModule("com/xgame/tools/mapbuilder/plugins/MapEditor.swf");
+				_i = ModuleManager.getModule("com/xgame/tools/mapbuilder/plugins/map/MapEditor.swf");
 				_i.addEventListener(ModuleEvent.READY, onModuleReady);
 				_i.load();
 			}

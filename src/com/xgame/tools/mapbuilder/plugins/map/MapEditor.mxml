@@ -11,20 +11,14 @@
 			import com.xgame.tools.mapbuilder.common.Document;
 			import com.xgame.tools.mapbuilder.event.EditorEvent;
 			
-			import mx.containers.ViewStack;
+			import mx.containers.TabNavigator;
 			import mx.controls.Alert;
 			import mx.events.ResizeEvent;
-			import mx.graphics.BitmapFill;
-			import mx.graphics.BitmapFillMode;
-			import mx.graphics.SolidColor;
-			import mx.graphics.SolidColorStroke;
 			
 			import spark.components.Group;
 			import spark.components.Image;
 			import spark.components.NavigatorContent;
-			import spark.components.Scroller;
 			import spark.layouts.BasicLayout;
-			import spark.primitives.Rect;
 			
 			private var currentDocument: Document;
 			private var docList: Vector.<Document> = new Vector.<Document>();
