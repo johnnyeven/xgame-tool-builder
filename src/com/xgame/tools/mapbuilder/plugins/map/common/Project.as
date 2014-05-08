@@ -1,14 +1,16 @@
-package com.xgame.tools.mapbuilder.common
+package com.xgame.tools.mapbuilder.plugins.map.common
 {
 	import com.xgame.tools.mapbuilder.editor.Editor;
 	import com.xgame.tools.mapbuilder.editor.FileManager;
+	import com.xgame.tools.mapbuilder.plugins.IProject;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
+	import com.xgame.tools.mapbuilder.common.Document;
 
-	public class Project
+	public class Project implements IProject
 	{
 		private static var _instance: Project;
 		private static var _allowInstance: Boolean = false;

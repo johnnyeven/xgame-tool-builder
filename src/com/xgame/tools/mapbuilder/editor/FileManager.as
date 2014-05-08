@@ -1,7 +1,7 @@
 package com.xgame.tools.mapbuilder.editor
 {
 	import com.xgame.tools.mapbuilder.common.Document;
-	import com.xgame.tools.mapbuilder.common.Project;
+	import com.xgame.tools.mapbuilder.plugins.map.common.Project;
 	
 	import flash.errors.IllegalOperationError;
 	import flash.utils.Dictionary;

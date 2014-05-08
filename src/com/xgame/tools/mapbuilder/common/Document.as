@@ -10,6 +10,14 @@ package com.xgame.tools.mapbuilder.common
 		public var map: BitmapData;
 		public var width: Number;
 		public var height: Number;
+//		public var tileCountX: int;
+//		public var tileCountY: int;
+//		public var tileWidth: Number;
+//		public var tileHeight: Number;
+//		public var blockCountX: int;
+//		public var blockCountY: int;
+//		public var blockWidth: Number;
+//		public var blockHeight: Number;
 		public var isDirectory: Boolean = false;
 		public var config: XML;
 		public var parent: Document;

@@ -1,0 +1,16 @@
+<root>
+	<form type="map">
+		<property id="id" name="id" type="TextInput" toolTip="地图编号" label="地图编号" />
+		<property id="name" name="name" type="TextInput" toolTip="地图名称" label="地图名称" />
+		<property id="width" name="width" type="TextInput" toolTip="地图宽度（自动获取）" label="地图宽度（自动获取）" editable="false" />
+		<property id="height" name="height" type="TextInput" toolTip="地图高度（自动获取）" label="地图高度（自动获取）" editable="false" />
+		<property id="tileCountX" name="tileNumWidth" type="TextInput" toolTip="瓦片地图数量(X轴)" label="瓦片地图数量(X轴)" />
+		<property id="tileCountY" name="tileNumHeight" type="TextInput" toolTip="瓦片地图数量(Y轴)" label="瓦片地图数量(Y轴)" />
+		<property id="tileWidth" name="tileWidth" type="TextInput" toolTip="瓦片地图宽度" label="瓦片地图宽度" editable="false" />
+		<property id="tileHeight" name="tileHeight" type="TextInput" toolTip="瓦片地图高度" label="瓦片地图高度" editable="false" />
+		<property id="blockCountX" name="blockNumWidth" type="TextInput" toolTip="寻路格子数量(X轴)" label="寻路格子数量(X轴)" />
+		<property id="blockCountY" name="blockNumHeight" type="TextInput" toolTip="寻路格子数量(Y轴)" label="寻路格子数量(Y轴)" />
+		<property id="blockWidth" name="pathWidth" type="TextInput" toolTip="寻路格子宽度" label="寻路格子宽度" editable="false" />
+		<property id="blockHeight" name="pathHeight" type="TextInput" toolTip="寻路格子高度" label="寻路格子高度" editable="false" />
+	</form>
+</root>

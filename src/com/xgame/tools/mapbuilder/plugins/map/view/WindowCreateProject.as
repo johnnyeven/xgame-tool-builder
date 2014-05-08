@@ -1,6 +1,7 @@
-package com.xgame.tools.mapbuilder.editor.view
+package com.xgame.tools.mapbuilder.plugins.map.view
 {
 	import com.xgame.tools.mapbuilder.editor.Editor;
+	import com.xgame.tools.mapbuilder.plugins.IPopUpPanel;
 	
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -18,7 +19,7 @@ package com.xgame.tools.mapbuilder.editor.view
 	import spark.layouts.BasicLayout;
 	import spark.layouts.HorizontalLayout;
 	
-	public class WindowCreateProject extends TitleWindow
+	public class WindowCreateProject extends TitleWindow implements IPopUpPanel
 	{
 		public var iptName: TextInput;
 		public var iptPath: TextInput;
