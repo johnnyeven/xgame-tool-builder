@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   width="100%" height="100%" implements="com.xgame.tools.builder.plugins.IEditor">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.xgame.tools.builder.event.EditorEvent;
+			import com.xgame.tools.builder.plugins.IDocument;
+			import com.xgame.tools.builder.plugins.map.common.MapDocument;
+			
+			import flash.filesystem.File;
+			import flash.filesystem.FileMode;
+			import flash.filesystem.FileStream;
+			
+			import mx.containers.TabNavigator;
+			import mx.controls.Alert;
+			import mx.events.ResizeEvent;
+			
+			import spark.components.Group;
+			import spark.components.Image;
+			import spark.components.NavigatorContent;
+			import spark.layouts.BasicLayout;
+			
+			private var currentDocument: MapDocument;
+			private var docList: Vector.<MapDocument> = new Vector.<MapDocument>();
+			private var docIndex: Dictionary = new Dictionary();
+			private var docContentIndex: Dictionary = new Dictionary();
+			private var enableDrag: Boolean = false;
+			private var _mousePreX: Number = 0;
+			private var _mousePreY: Number = 0;
+			private var _currentContainer: Group;
+			
+			[Embed(source="assets/images/icon_background.jpg")]
+			private var IconBackground: Class;
+			
+			public function addDocument(doc: IDocument): int
+			{
+				currentDocument = doc as MapDocument;
+				var i: int = docList.indexOf(doc);
+				if(i > -1)
+				{
+					switchTab(i);
+					return i;
+				}
+				else
+				{
+					docList.push(currentDocument);
+					buildContent(currentDocument);
+					switchTab(tabNav.length - 1);
+					return docList.length - 1;
+				}
+			}
+			
+			public function switchTab(index: int): void
+			{
+				if(index < tabNav.length)
+				{
+					tabNav.selectedIndex = index;
+				}
+			}
+			
+			private function buildContent(doc: MapDocument): void
+			{
+				var content: NavigatorContent = new NavigatorContent();
+				content.percentWidth = 100;
+				content.percentHeight = 100;
+				content.label = doc.name;
+				
+				tabNav.addItem(content);
+				docContentIndex[doc] = content;
+				
+				var tab: TabNavigator = new TabNavigator();
+				tab.percentWidth = 100;
+				tab.percentHeight = 100;
+				tab.styleName = "innerTab";
+				
+				content.addElement(tab);
+				
+				var contentDesign: NavigatorContent = new NavigatorContent();
+				contentDesign.percentWidth = 100;
+				contentDesign.percentHeight = 100;
+				contentDesign.label = "设计模式";
+				
+				tab.addElement(contentDesign);
+				
+				var layout: BasicLayout = new BasicLayout();
+				layout.clipAndEnableScrolling = true;
+				contentDesign.layout = layout;
+				
+				var container: Group = new Group();
+				container.addEventListener(ResizeEvent.RESIZE, onResize);
+				container.addEventListener(MouseEvent.MOUSE_WHEEL, onMouseWheel);
+				container.addEventListener(MouseEvent.RIGHT_MOUSE_DOWN, onRightMouseDown);
+				container.addEventListener(MouseEvent.RIGHT_MOUSE_UP, onRightMouseUp);
+				
+				contentDesign.addElement(container);
+				
+				if(doc.map == null)
+				{
+					var file: File = new File(doc.path);
+					if(file.exists)
+					{
+						var byteArray: ByteArray = new ByteArray();
+						var fileStream: FileStream = new FileStream();
+						fileStream.open(file, FileMode.READ);
+						fileStream.readBytes(byteArray);
+						
+						var loader: Loader = new Loader();
+						loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onMapLoadComplete);
+						loader.loadBytes(byteArray);
+					}
+					else
+					{
+						Alert.show("引用的地图文件不存在，path=" + doc.path, "错误", Alert.OK, this);
+					}
+				}
+				else
+				{
+					var img: Image = new Image();
+					img.source = doc.map;
+					img.addEventListener(MouseEvent.CLICK, onMapClick);
+					
+					container.addElement(img);
+				}
+			}
+			
+			private function onMapLoadComplete(evt: Event): void
+			{
+				var loaderInfo: LoaderInfo = evt.currentTarget as LoaderInfo;
+				currentDocument.map = (loaderInfo.content as Bitmap).bitmapData;
+				
+				var content: NavigatorContent = docContentIndex[currentDocument];
+				if(content != null)
+				{
+					var tab: TabNavigator = content.getElementAt(0) as TabNavigator;
+					var designContent: NavigatorContent = tab.getItemAt(0) as NavigatorContent;
+					var container: Group = designContent.getElementAt(0) as Group;
+					
+					var img: Image = new Image();
+					img.source = currentDocument.map;
+					img.addEventListener(MouseEvent.CLICK, onMapClick);
+					
+					container.addElement(img);
+				}
+			}
+			
+			private function onResize(evt: ResizeEvent): void
+			{
+				var content: NavigatorContent = evt.currentTarget.parent.parent.parent as NavigatorContent;
+				var per1: Number = (content.width - 20) / (content.height - 20);
+				var per2: Number = evt.currentTarget.width / evt.currentTarget.height;
+				var scale: Number = 1;
+				
+				if(per1 > per2)
+				{
+					scale = (content.height - 20) / evt.currentTarget.height;
+				}
+				else
+				{
+					scale = (content.width - 20) / evt.currentTarget.width;
+				}
+				
+				evt.currentTarget.scaleX = scale;
+				evt.currentTarget.scaleY = scale;
+				evt.currentTarget.x = (content.width - evt.currentTarget.width * scale) >> 1;
+				evt.currentTarget.y = (content.height - evt.currentTarget.height * scale) >> 1;
+			}
+			
+			private function onRightMouseDown(evt: MouseEvent): void
+			{
+				_currentContainer = evt.currentTarget as Group;
+				_currentContainer.startDrag();
+			}
+			
+			private function onRightMouseUp(evt: MouseEvent): void
+			{
+				_currentContainer.stopDrag();
+				_currentContainer = null;
+			}
+			
+			private function onMouseWheel(evt: MouseEvent): void
+			{
+				if(evt.delta > 0)
+				{
+					evt.currentTarget.scaleX += .05;
+					evt.currentTarget.scaleY += .05;
+				}
+				else
+				{
+					evt.currentTarget.scaleX -= .05;
+					evt.currentTarget.scaleY -= .05;
+				}
+			}
+			
+			private function onMapClick(evt: MouseEvent): void
+			{
+				var index: int = tabNav.selectedIndex;
+				if(index < docList.length)
+				{
+					var doc: MapDocument = docList[index];
+					var event: EditorEvent = new EditorEvent(EditorEvent.ITEM_CLICK);
+					event.document = doc;
+					event.targetType = "map";
+					
+					dispatchEvent(event);
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="assets/style/map-style.css"/>
+	
+	<mx:TabNavigator id="tabNav" left="0" right="0" top="0" bottom="0" width="100%" height="100%">
+	</mx:TabNavigator>
+</mx:Module>
