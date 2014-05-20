@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<plugin>
+		<name>地图编辑器</name>
+		<path>xgame-tool-builder-plugin-map.swf</path>
+		
+		<FileManagerInstance>com.xgame.tools.builder.plugins.map.common.FileManager</FileManagerInstance>
+		<EditorInstance>com.xgame.tools.builder.plugins.map.common.MapEditor</EditorInstance>
+		<ProjectInstance>com.xgame.tools.builder.plugins.map.common.Project</ProjectInstance>
+		
+		<ModuleEditor>com.xgame.tools.builder.plugins.map.MapEditor</ModuleEditor>
+		<ModuleFileTree>com.xgame.tools.builder.plugins.map.MapFileTree</ModuleFileTree>
+		<ModuleProperty>com.xgame.tools.builder.plugins.map.MapProperty</ModuleProperty>
+	</plugin>
+</root>
