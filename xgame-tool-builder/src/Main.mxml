@@ -4,7 +4,8 @@
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
 					   xmlns:flexlib="http://code.google.com/p/flexlib/"
 					   width="1200" height="800" backgroundColor="#F6F6F6"
-					   creationComplete="windowedapplication1_creationCompleteHandler(event)">
+					   creationComplete="windowedapplication1_creationCompleteHandler(event)"
+					   initialize="windowedapplication1_initializeHandler(event)">
 	<s:layout>
 		<s:BasicLayout/>
 	</s:layout>
@@ -31,6 +32,7 @@
 			
 			protected function windowedapplication1_creationCompleteHandler(event:FlexEvent):void
 			{
+				trace("create");
 				EditorImpl.init(this);
 			}
 			
@@ -77,6 +79,11 @@
 					var doc: IDocument = FileManagerImpl.instance.getDocument(id);
 					EditorImpl.instance.createEditor(doc);
 				}
+			}
+			
+			protected function windowedapplication1_initializeHandler(event:FlexEvent):void
+			{
+				
 			}
 			
 		]]>
