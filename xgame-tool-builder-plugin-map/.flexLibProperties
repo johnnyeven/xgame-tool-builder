@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses/>
-  <includeResources/>
+  <includeResources>
+    <resourceEntry destPath="assets/images/icon_background.jpg" sourcePath="assets/images/icon_background.jpg"/>
+    <resourceEntry destPath="assets/style/map-style.css" sourcePath="assets/style/map-style.css"/>
+    <resourceEntry destPath="com/xgame/tools/builder/plugins/map/property.xml" sourcePath="com/xgame/tools/builder/plugins/map/property.xml"/>
+  </includeResources>
   <namespaceManifests/>
 </flexLibProperties>

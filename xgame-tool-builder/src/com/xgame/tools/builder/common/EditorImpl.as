@@ -2,6 +2,7 @@ package com.xgame.tools.builder.common
 {
 	import com.xgame.tools.builder.plugins.IDocument;
 	import com.xgame.tools.builder.plugins.IEditorManager;
+	import com.xgame.tools.builder.utils.Reflection;
 	
 	import flash.display.Loader;
 	import flash.errors.IllegalOperationError;
@@ -11,12 +12,12 @@ package com.xgame.tools.builder.common
 	import flash.filesystem.FileStream;
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
+	import flash.system.LoaderContext;
 	import flash.utils.ByteArray;
 	
 	import mx.containers.HBox;
 	import mx.containers.Panel;
 	import mx.controls.Tree;
-	import flash.system.LoaderContext;
 	
 	public class EditorImpl implements IEditorManager
 	{
@@ -95,6 +96,9 @@ package com.xgame.tools.builder.common
 		private function onPluginLoadComplete(evt: Event): void
 		{
 			trace("Ok");
+			
+			impl = Reflection.createInstance("com.xgame.tools.builder.plugins.map.common.MapEditor", ApplicationDomain.currentDomain);
+			impl.showWinNewProject();
 		}
 		
 		public function get treeProjectFile(): Tree
