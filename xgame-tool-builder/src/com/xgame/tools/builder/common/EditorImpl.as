@@ -3,11 +3,20 @@ package com.xgame.tools.builder.common
 	import com.xgame.tools.builder.plugins.IDocument;
 	import com.xgame.tools.builder.plugins.IEditorManager;
 	
+	import flash.display.Loader;
 	import flash.errors.IllegalOperationError;
+	import flash.events.Event;
+	import flash.filesystem.File;
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
+	import flash.net.URLRequest;
+	import flash.system.ApplicationDomain;
+	import flash.utils.ByteArray;
 	
 	import mx.containers.HBox;
 	import mx.containers.Panel;
 	import mx.controls.Tree;
+	import flash.system.LoaderContext;
 	
 	public class EditorImpl implements IEditorManager
 	{
@@ -25,6 +34,8 @@ package com.xgame.tools.builder.common
 			}
 			
 			_main = main;
+			
+			initPlugin();
 		}
 		
 		public static function init(main: Main): EditorImpl
@@ -41,6 +52,49 @@ package com.xgame.tools.builder.common
 		public static function get instance(): EditorImpl
 		{
 			return _instance;
+		}
+		
+		private function initPlugin(): void
+		{
+			var pluginDirectory: File = File.applicationDirectory.resolvePath("plugins");
+			if(pluginDirectory.isDirectory)
+			{
+				var pluginList: Array = pluginDirectory.getDirectoryListing();
+				var configFile: File;
+				var fileStrem: FileStream;
+				var config: XML;
+				for each(var pluginPath: File in pluginList)
+				{
+					configFile = pluginPath.resolvePath("config.xml");
+					fileStrem = new FileStream();
+					fileStrem.open(configFile, FileMode.READ);
+					config = XML(fileStrem.readUTFBytes(fileStrem.bytesAvailable));
+					loadPluginConfig(pluginPath, config);
+					fileStrem.close();
+				}
+			}
+		}
+		
+		private function loadPluginConfig(path: File, config: XML): void
+		{
+			if(config.plugin.path != "")
+			{
+				var file: File = path.resolvePath(config.plugin.path);
+				var fileStrem: FileStream = new FileStream();
+				var byteArray: ByteArray = new ByteArray();
+				var loaderContext: LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
+				loaderContext.allowCodeImport = true;
+				fileStrem.open(file, FileMode.READ);
+				fileStrem.readBytes(byteArray, 0, fileStrem.bytesAvailable);
+				var loader: Loader = new Loader();
+				loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onPluginLoadComplete);
+				loader.loadBytes(byteArray, loaderContext);
+			}
+		}
+		
+		private function onPluginLoadComplete(evt: Event): void
+		{
+			trace("Ok");
 		}
 		
 		public function get treeProjectFile(): Tree

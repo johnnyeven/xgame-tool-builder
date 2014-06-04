@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009"
+<s:Module xmlns:fx="http://ns.adobe.com/mxml/2009"
 		   xmlns:s="library://ns.adobe.com/flex/spark"
 		   xmlns:mx="library://ns.adobe.com/flex/mx"
 		   width="100%" height="100%" implements="com.xgame.tools.builder.plugins.IEditor">
@@ -215,4 +215,4 @@
 	
 	<mx:TabNavigator id="tabNav" left="0" right="0" top="0" bottom="0" width="100%" height="100%">
 	</mx:TabNavigator>
-</mx:Module>
+</s:Module>
