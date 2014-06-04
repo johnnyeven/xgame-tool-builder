@@ -22,7 +22,7 @@
 			
 			protected function module1_creationCompleteHandler(event:FlexEvent):void
 			{
-				MPanelProperty.init(this);
+				MPanelProperty.init();
 				MPanelProperty.instance.initPanel();
 			}
 			

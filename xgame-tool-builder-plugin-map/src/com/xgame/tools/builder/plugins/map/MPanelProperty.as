@@ -23,23 +23,21 @@ package com.xgame.tools.builder.plugins.map
 		private static var _instance: MPanelProperty;
 		private static var _allowInstance: Boolean = false;
 		
-		private var _module: MapProperty;
 		private var _panelContainer: Dictionary;
 		private var _itemContainer: Dictionary;
 		
-		public function MPanelProperty(m: MapProperty)
+		public function MPanelProperty()
 		{
-			_module = m;
 			_panelContainer = new Dictionary();
 			_itemContainer = new Dictionary();
 		}
 		
-		public static function init(m: MapProperty): MPanelProperty
+		public static function init(): MPanelProperty
 		{
 			if(_instance == null)
 			{
 				_allowInstance = true;
-				_instance = new MPanelProperty(m);
+				_instance = new MPanelProperty();
 				_allowInstance = false;
 			}
 			return _instance;
@@ -59,7 +57,7 @@ package com.xgame.tools.builder.plugins.map
 		{
 			var loader: URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, onPropertyLoaded);
-			loader.load(new URLRequest("property.xml"));
+			loader.load(new URLRequest("plugins/map/property.xml"));
 		}
 		
 		private function onPropertyLoaded(evt: Event): void

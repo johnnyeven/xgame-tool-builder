@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="200">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<s:TitleWindow x="0" y="0" width="100%" height="100%" title="新建项目">
+		<s:Form x="0" y="0" width="100%" height="100%">
+			<s:layout>
+				<s:BasicLayout/>
+			</s:layout>
+			<s:FormItem x="0" y="0" width="100%" label="项目名称">
+				<s:TextInput id="iptName" width="100%"/>
+				
+			</s:FormItem>
+			<s:FormItem x="0" y="50" width="100%" label="项目路径">
+				<s:layout>
+					<s:HorizontalLayout/>
+				</s:layout>
+				<s:TextInput id="iptPath" width="200"/>
+				<s:Button id="btnBroswe" label="浏览"/>
+				
+			</s:FormItem>
+			<s:Button x="79" y="116" label="创建"/>
+			<s:Button x="227" y="116" label="取消"/>
+		</s:Form>
+	</s:TitleWindow>
+</s:Module>

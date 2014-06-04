@@ -49,7 +49,10 @@ package com.xgame.tools.builder.plugins.map.common
 		
 		public function showWinNewProject(): void
 		{
-			_winNewProject.show();
+//			_winNewProject.show();
+			_propertyModuleInfo = ModuleManager.getModule("plugins/map/MapProperty.swf");
+			_propertyModuleInfo.addEventListener(ModuleEvent.READY, onPropertyModuleReady);
+			_propertyModuleInfo.load();
 		}
 		
 		public function showWinNewDocument(): void
@@ -87,7 +90,7 @@ package com.xgame.tools.builder.plugins.map.common
 			
 			if(_fileModule == null)
 			{
-				_fileModuleInfo = ModuleManager.getModule("com/xgame/tools/mapbuilder/plugins/map/MapFileTree.swf");
+				_fileModuleInfo = ModuleManager.getModule("plugins/map/MapFileTree.swf");
 				_fileModuleInfo.addEventListener(ModuleEvent.READY, onFileModuleReady);
 				_fileModuleInfo.load();
 			}
@@ -98,7 +101,7 @@ package com.xgame.tools.builder.plugins.map.common
 			
 			if(_editorModule == null)
 			{
-				_editorModuleInfo = ModuleManager.getModule("com/xgame/tools/mapbuilder/plugins/map/MapEditor.swf");
+				_editorModuleInfo = ModuleManager.getModule("plugins/map/MapEditor.swf");
 				_editorModuleInfo.addEventListener(ModuleEvent.READY, onEditorModuleReady);
 				_editorModuleInfo.load();
 			}
@@ -112,7 +115,7 @@ package com.xgame.tools.builder.plugins.map.common
 			
 			if(_propertyModule == null)
 			{
-				_propertyModuleInfo = ModuleManager.getModule("com/xgame/tools/mapbuilder/plugins/map/MapProperty.swf");
+				_propertyModuleInfo = ModuleManager.getModule("plugins/map/MapProperty.swf");
 				_propertyModuleInfo.addEventListener(ModuleEvent.READY, onPropertyModuleReady);
 				_propertyModuleInfo.load();
 			}
@@ -127,6 +130,11 @@ package com.xgame.tools.builder.plugins.map.common
 			_fileModule = _fileModuleInfo.factory.create() as IFile;
 			
 			EditorImpl.instance.panelFile.addElement(_fileModule);
+		}
+		
+		private function onFileModuleError(evt: ModuleEvent): void
+		{
+			trace(evt.errorText);
 		}
 		
 		private function onEditorModuleReady(evt: ModuleEvent): void

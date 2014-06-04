@@ -21,7 +21,9 @@
   <applications>
     <application path="xgame-tool-builder-plugin-map.as"/>
   </applications>
-  <modules/>
+  <modules>
+    <module destPath="com/xgame/tools/builder/plugins/map/MapCreateProject.swf" optimize="false" sourcePath="src/com/xgame/tools/builder/plugins/map/MapCreateProject.mxml"/>
+  </modules>
   <buildCSSFiles/>
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
 </actionScriptProperties>
