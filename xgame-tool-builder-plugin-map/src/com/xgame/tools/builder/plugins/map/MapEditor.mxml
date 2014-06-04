@@ -20,6 +20,7 @@
 			import mx.controls.Alert;
 			import mx.events.ResizeEvent;
 			
+			import spark.modules.Module;
 			import spark.components.Group;
 			import spark.components.Image;
 			import spark.components.NavigatorContent;
